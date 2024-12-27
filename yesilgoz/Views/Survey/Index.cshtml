@@ -1,0 +1,57 @@
+﻿@using SurveyPortal.ViewModels
+
+@{
+    Layout = "_LayoutAdmin";
+}
+@section CardHeader{
+    <span>Anketler</span>
+}
+@model List<SurveyModel>
+
+
+<a asp-action="Add" asp-controller="Survey" class="btn btn-info btn-sm mb-2">Ekle</a>
+
+@if (Model.Count == 0)
+{
+    <div class="alert alert-danger col-md-4 mb-2">Henüz Anket Eklenmedi!</div>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <td>Id</td>
+            <td>Anket Adı</td>
+            <td>Sorular</td>
+            <td>Durumu</td>
+            <th>Eklenme</th>
+            <th>Güncellenme</th>
+            <td>Düzenle-Sil</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var survey in Model)
+        {
+            <tr>
+                <td>@survey.Id</td>
+                <td>@survey.Title</td>
+                <td>@survey.Questions</td>
+                <td>
+                    @if (survey.IsActive)
+                    {
+                        <span class="badge bg-success text-white">Aktif</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger text-white">Pasif</span>
+                    }
+                </td>
+                <td>@survey.Created</td>
+                <td>@survey.Updated</td>
+                <td> 
+                    <a asp-action="Update" asp-controller="Survey" class="btn btn-primary btn-sm" asp-route-id="@survey.Id">Düzenle</a>
+                    <a asp-action="Delete" asp-controller="Survey" class="btn btn-danger btn-sm" asp-route-id="@survey.Id">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
